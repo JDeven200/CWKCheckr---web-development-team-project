@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/add-coursework
+Content-Type: application/json
+
+{
+  "studentNo": 1,
+  "courseId": 1,
+  "courseworkId": 5
+}
+
+#download the VS code extension called Rest client and you can this to make calls by clicking the btn at the top.

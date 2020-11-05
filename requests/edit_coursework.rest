@@ -1,0 +1,17 @@
+POST http://localhost:3001/api/edit-coursework
+Content-Type: application/json
+## (studentNo, courseworkId, courseworkName, completionDate, milestones, dueDate)
+
+{
+  "studentNo": 1,
+  "courseworkId": 5,
+  "milestones": "team meeting3"
+}
+
+# POST http://localhost:3001/api/edit-coursework
+# POST http://localhost:3001/api/cwk/update
+
+
+#"courseworkDescription": "Make an edit {{$randomInt 1 100}} {{$randomInt 1 100}}",
+#"courseworkName": "CWK Uno"
+# "dueDate": "2020-08-05T23:00:00.000+00:00"

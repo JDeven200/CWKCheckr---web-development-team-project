@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/remove-coursework
+Content-Type: application/json
+
+{
+  "studentNo": 1,
+  "courseworkId": 5
+}

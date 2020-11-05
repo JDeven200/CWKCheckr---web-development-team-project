@@ -1,0 +1,61 @@
+<html lang="en">
+ {{>header}}
+<body class="container">
+    {{>page-header}}
+    <div class="container">
+        <h2 style="color:red;">Welcome, {{Student}}</h2>
+            <div>
+                <div class="jumbotron" style="display:inline-block; float:left; vertical-align:middle; background-color: #7D7D7D;">
+                    <h2 style="font-size:32; background-color:#3D3D3D; color:white; margin-bottom:30px;">Coursework quick glance</h2>
+                    {{#Coursework}}
+                        <div class="card" style="width:24rem; background-color:#707070; margin-bottom:50px;">
+                            <div class="card-heading">
+                                <h5 class="card-title" style="color:red;">{{courseworkName}}</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text" style="color:white;">Course: {{courseName}}</p>
+                                <p class="card-text" style="color:white;">Due Date: {{dueDate}}</p>
+                                <p class="card-text" style="color:white;">Description: {{courseworkDescription}}</p>
+                            </div>
+                        </div>
+                    {{/Coursework}}
+                    {{^Coursework}}
+                        <div class="card" style="width:24rem; background-color:#707070; margin-bottom:50px;">
+                            <div class="card-heading">
+                                <h5 class="card-title" style="color:red;">No Coursework to show...</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text" style="color:white;">Add coursework functionality coming soon!</p>
+                            </div>
+                        </div>
+                    {{/Coursework}}
+                </div>
+                <div class="jumbotron" style="display:inline-block; float:right; vertical-align:middle; background-color: #707070;">
+                    <h2 style="font-size:32; background-color:#3D3D3D; color:white; margin-bottom:30px;">Courses and Announcements</h2>
+                    {{#Courses}}
+                        <div class="card" style="width:24rem; background-color:#7D7D7D; margin-bottom:50px;">
+                            <div class="card-heading">
+                                <h5 class="card-title" style="color:red;">{{courseName}}</h5>
+                            </div>
+                            <div class="card-body">
+                                {{#Announcements}}
+                                    <p class="card-text" style="color:white;">Announcement: {{Announcement}}</p>
+                                {{/Announcements}}
+                            </div>
+                        </div>
+                    {{/Courses}}
+                    {{^Courses}}
+                        <div class="card" style="width:24rem; background-color:#7D7D7D; margin-bottom:50px;">
+                            <div class="card-heading">
+                                <h5 class="card-title" style="color:red;">No Courses to show...</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text" style="color:white;">Add course functionality coming soon!</p>
+                            </div>
+                        </div>
+                    {{/Courses}}
+                </div>
+                </div>
+            </div>
+    </div>
+</body>

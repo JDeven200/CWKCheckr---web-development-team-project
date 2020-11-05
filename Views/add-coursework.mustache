@@ -1,0 +1,98 @@
+<html lang="en">
+    {{>header}}
+    <body>
+    <script type="text/javascript">
+    
+        //Javascript for dynamically generating milestone tags.
+
+        var counter = 0;
+
+        //Generates a new milestone div tag
+
+        function getMilestone(value) {
+            return '<label for"milestone'+counter+'">Milestone '+counter+'</label>'+
+                    '<input style="margin-bottom:20px" class="form-control" id="milestone'+counter+'" name="milestone'+counter+'" type="text" value="'+value+'"/>' +
+                    '<input type="checkbox" id="complete'+counter+'" name="complete'+counter+'" value="Complete">Complete</input>'+
+                    '<br>'+
+                    '<button style="margin-bottom:30px" class="btn btn-danger" type="button" onclick="removeMilestone(this)">Remove Milestone '+counter+'</button>'
+        }
+        
+        //called when the 'add milestone' button is clicked on page
+
+        function addMilestone() {
+            counter++;
+            var div = document.createElement('DIV');
+            div.innerHTML = getMilestone("");
+            document.getElementById("milestoneDiv").appendChild(div);
+        }
+
+        //called when the 'remove milestone [x]' button is clicked on page
+
+        function removeMilestone(div) {
+            document.getElementById("milestoneDiv").removeChild(div.parentNode);
+        }
+
+        //Ajax function which sends the current value of the course select combobox option to the ajax controller. -->
+        //The courseworks which belong to the selected course are then generated and inserted into the coursework select combobox. -- >
+
+        $(document).ready(function(){
+
+            //function invoked once the document is loaded
+
+            $.ajax({url: "/api/ajax-add", 
+                        type: "GET",
+                        data: {course: $('#courseSelect').val()},
+                success: function(result){
+                    $('#courseworkSelect').empty();
+                    $('#courseworkSelect').html(result);
+                }});
+        $('#courseSelect').change(function() {
+            
+            //function invoked when the course select combobox value is changed by the user
+
+                $.ajax({url: "/api/ajax-add", 
+                        type: "GET",
+                        data: {course: $('#courseSelect').val()},
+                success: function(result){
+                    $('#courseworkSelect').empty();
+                    $('#courseworkSelect').html(result);
+                }});
+            });
+        });
+    </script>
+        <div class="container">
+            {{>page-header}}
+        </div>
+        <div class="container">
+           <div class="jumbotron" style="vertical-align:middle; align-items: center; margin-top:50px;
+            width:100%; background-color: #707070;">
+                <h3 style="font-size:24; color:red;">{{error}}</h3>
+                <h2 style="font-size:32; color:white; margin-bottom:30px;">Course</h2>
+                <form action= "/api/add-coursework" method = "post">
+                    <div class="form-group dropdown">
+                        <select class="input-large form-control" name="courseSelect" id="courseSelect">
+                        {{#courses}}
+                            <option value="{{courseId}}">{{courseName}}</option>  <!-- This is how a course/coursework will be selected.
+                                                                        The value attribute will be the course/coursework ID, and the 
+                                                                        text displayed will be the course/coursework name. -->
+                        {{/courses}}
+                        </select>
+                    </div>
+                    <h2 style="font-size:32; color:white; margin-bottom:30px;">Coursework</h2>
+                    <div class="form-group dropdown">
+                        <select class="input-large form-control" name="courseworkSelect" id="courseworkSelect">
+                            
+                        </select>
+                    </div>
+                    <h2 style="font-size:32; color:white; margin-bottom:30px;">Milestones</h2>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="button" onclick="addMilestone()">Add Milestone</button>
+                        <div id="milestoneDiv">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<html lang="en">
+    {{>header}}
+        <body class="container">
+            {{>page-header-nologin}}
+            <div style="display:inline-block; font-size:52; margin-top:250px; font-family:'Red Hat Display', sans serif;">Join the</div>
+            <div style="display:inline-block; font-size:72; color:red; margin-top:250px; font-family:'Red Hat Display', sans serif;"> fun.</div>
+            <div class="jumbotron" style="display:inline-block; float:right; 
+            vertical-align:middle; margin-right:100px; margin-top:50px;
+            width:350px; background-color: #707070;">
+                <h2 style="font-size:32; color:white; margin-bottom:30px;">Register</h2>
+                <h3 style="font-size:24; color:red;">{{user-exists}}</h3>
+                <h3 style="font-size:24; color:red;">{{db-error}}</h3>
+                <form action ="/api/users" method = "post">
+                    <div class="form-group">
+                        <label for="registerName">Full Name</label>
+                        <input class="form-control" id="registerName" name="registerName" aria-describedby="nameHelp" required>
+                        <small id="nameHelp" class="form-text" style="color:white;">Please enter your full name.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerUsername">Username</label>
+                        <input type="text" class="form-control" id="registerUsername" name="registerUsername" aria-describedby="userHelp" required>
+                        <small id="userHelp" class="form-text" style="color:white;">Please enter your username.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" class="form-control" id="registerPassword" name="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirm" name="confirm" required>
+                    </div>
+                    <div class="form-group">
+                        <p style="color:red;">{{pass-match}}</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </body>
+</html>

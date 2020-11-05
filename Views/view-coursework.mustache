@@ -1,0 +1,120 @@
+<html lang="en">
+    {{>header}}
+    <body>
+        <div class="container">
+            {{>page-header}}
+        </div>
+        <div class="container">
+            <div class="jumbotron"style="background-color: :#7D7D7D;">
+                <h2 style="background-color:#2E2E2E; color:white;" font-family:'Red Hat Display', sans serif;">Complete Coursework</h2>
+                {{#Complete Coursework}}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Coursework Name</th>
+                                <th scope="col">Course Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Milestones</th>
+                                <th scope="col">Due Date</th>
+                                <th scope="col">Completion Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color:red;">
+                                    <a href="/view-coursework?selected={{courseworkId}}">
+                                    <div>
+                                    {{courseworkName}}
+                                    </div>
+                                </td>
+                                <td style="color:red;">{{courseName}}</td>
+                                <td width="200">{{courseworkDescription}}</td>
+                                <td>
+                                    <ul>
+                                        {{#milestones}}
+                                            <li>
+                                                {{milestoneTitle}}
+                                                {{#complete}}
+                                                    <div>
+                                                        <img src="../check-square.svg" id="checkImg"/>
+                                                    <div>
+                                                {{/complete}}
+                                                {{^complete}}
+                                                    <div>
+                                                        <img src="../square.svg" id="checkImg"/>
+                                                    <div>
+                                                {{/complete}}
+                                            </li>
+                                        {{/milestones}}
+                                    </ul>
+                                </td>
+                                <td>{{dueDate}}</td>
+                                <td>{{completionDate}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {{/Complete Coursework}}
+                {{^Complete Coursework}}
+                    <div class="jumbotron" style="background-color:#C4C4C4;">
+                        <h3 style="font-family:'Red Hat Display', sans serif;">No Items to show.</h3>
+                    </div>
+                {{/Complete Coursework}}
+            </div>
+        </div>
+        <div class="container">
+            <div class="jumbotron"style="background-color: :#7D7D7D;">
+                <h2 style="background-color:#2E2E2E; color:white; font-family:'Red Hat Display', sans serif;">Incomplete Coursework</h2>
+                {{#Incomplete Coursework}}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Coursework Name</th>
+                                <th scope="col">Course Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Milestones</th>
+                                <th scope="col">Due Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color:red;">
+                                    <a href="/view-coursework?selected={{courseworkId}}">
+                                    <div>
+                                    {{courseworkName}}
+                                    </div>
+                                </td>
+                                <td style="color:red;">{{courseName}}</td>
+                                <td width="200">{{courseworkDescription}}</td>
+                                <td>
+                                    <ul>
+                                        {{#milestones}}
+                                            <li>
+                                                {{milestoneTitle}}
+                                                {{#complete}}
+                                                    <div>
+                                                        <img src="check-square.svg" id="checkImg"/>
+                                                    <div>
+                                                {{/complete}}
+                                                {{^complete}}
+                                                    <div>
+                                                        <img src="square.svg" id="checkImg"/>
+                                                    <div>
+                                                {{/complete}}
+                                            </li>
+                                        {{/milestones}}
+                                    </ul>
+                                </td>
+                                <td>{{dueDate}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {{/Incomplete Coursework}}
+                {{^Incomplete Coursework}}
+                    <div class="jumbotron" style="background-color:#C4C4C4;">
+                        <h3 style="font-family:'Red Hat Display', sans serif;">No Items to show.</h3>
+                    </div>
+                {{/Incomplete Coursework}}
+            </div>
+        </div>
+    </body>
+</html>

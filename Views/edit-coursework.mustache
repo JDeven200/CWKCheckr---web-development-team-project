@@ -1,0 +1,167 @@
+<html lang="en">
+    {{>header}}
+    <body>
+    <script type="text/javascript">
+    
+        //Javascript for dynamically generating milestone tags.
+
+        var counter = 0;
+
+        //Generates a new milestone div tag
+
+        function getMilestone(value, complete) {
+            var undefined = void(0);
+            if(complete === undefined) {
+                return '<label for"milestone'+counter+'">Milestone '+counter+'</label>'+
+                    '<input style="margin-bottom:20px" class="form-control" id="milestone'+counter+'" name="milestone'+counter+'" type="text" value="'+value+'"/>' +
+                    '<input type="checkbox" id="complete'+counter+'" name="complete'+counter+'" value="Complete">Complete</input>'+
+                    '<br>'+
+                    '<button style="margin-bottom:30px" class="btn btn-danger" type="button" onclick="removeMilestone(this)">Remove Milestone '+counter+'</button>'
+            }
+            else { 
+                return '<label for"milestone'+counter+'">Milestone '+counter+'</label>'+
+                    '<input style="margin-bottom:20px" class="form-control" id="milestone'+counter+'" name="milestone'+counter+'" type="text" value="'+value+'"/>' +
+                    '<input type="checkbox" id="complete'+counter+'" name="complete'+counter+'" value="Complete" checked>Complete</input>'+
+                    '<br>'+
+                    '<button style="margin-bottom:30px" class="btn btn-danger" type="button" onclick="removeMilestone(this)">Remove Milestone '+counter+'</button>'
+            }
+            
+        }
+        
+        //called when the 'add milestone' button is clicked on page
+
+        function addMilestone(value, complete) {
+            counter++;
+            var undefined = void(0);
+            value === undefined ? value = "" : value = value;
+            var div = document.createElement('DIV');
+            div.innerHTML = getMilestone(value, complete);
+            document.getElementById("milestoneDiv").appendChild(div);
+        }
+
+        //called when the 'remove milestone [x]' button is clicked on page
+
+        function removeMilestone(div) {
+            document.getElementById("milestoneDiv").removeChild(div.parentNode);
+        }
+
+        //Ajax function which sends the current value of the course select combobox option to the ajax controller.
+        //The courseworks which belong to the selected course are then generated and inserted into the coursework select combobox.
+
+        $(document).ready(function(){
+
+            //function invoked once the document is loaded
+
+            $.ajax({url: "/api/ajax-edit", 
+                        type: "GET",
+                        data: {coursework: $('#courseworkSelect').val()},
+                success: function(result){
+
+                    counter = 0;
+
+                    $('#nameDiv').empty();
+                    $('#descDiv').empty();
+                    $('#milestoneDiv').empty();
+                    console.log(result); 
+
+                    $('#nameDiv').html(result[0]);
+                    $('#descDiv').html(result[1]);
+                    for(var i = 0; i < result[2].length; i++) {
+                        console.log(result[2][i]);
+                        addMilestone(result[2][i].milestoneTitle, result[2][i].complete);
+                    }
+                    $('#dueDate').val(result[3]);
+                    $('#completionDate').val(result[4]);
+
+                    //This updates the counter value which checks how many milestones their are.
+                    counter = result[2][i].length;
+                }});
+
+        $('#courseworkSelect').change(function() {
+            
+                //function invoked when the course select combobox value is changed by the user
+
+                $.ajax({url: "/api/ajax-edit", 
+                        type: "GET",
+                        data: {coursework: $('#courseworkSelect').val()},
+                    success: function(result){
+
+                        //TODO: The result from the response shall need to be an array. The first index shall be the Description html,
+                        //      the second index shall be the milestones and the third shall be the completion Date
+                        //NOTE: Some functionality within this function may need to be modified in order to obtain the data from 
+                        //      the 'result' array.
+
+                        counter = 0;
+
+                        $('#nameDiv').empty();
+                        $('#descDiv').empty();
+                        $('#milestoneDiv').empty();
+                        console.log(result);
+
+                        $('#nameDiv').html(result[0]);
+                        $('#descDiv').html(result[1]);
+                        for(var i = 0; i < result[2].length; i++) {
+                            console.log(result[2][i]);
+                            addMilestone(result[2][i].milestoneTitle, result[2][i].complete);
+                        }
+                        $('#dueDate').val(result[3]);
+                        $('#completionDate').val(result[4]);
+
+                        //This updates the counter value which checks how many milestones their are.
+                        counter = result[2][i].length;
+                    }});
+            });
+        });
+    </script>
+    <script>
+        $( function() {
+            $("#completionDate").datepicker({maxDate : new Date});
+            $("#dueDate").datepicker();
+        } );
+    </script>
+        <div class="container">
+            {{>page-header}}
+        </div>
+        <div class="container">
+           <div class="jumbotron" style="vertical-align:middle; align-items: center; margin-top:50px;
+            width:100%; background-color: #707070;">
+            <h3 style="font-size:24; color:red;">{{error}}</h3>
+                <form action= "/api/edit-coursework" method = "post">
+                    <h2 style="font-size:32; color:white; margin-bottom:30px;">Coursework</h2>
+                    <div class="form-group dropdown">
+                        <select class="input-large form-control" name="courseworkSelect" id="courseworkSelect">
+                            {{#courseworks}}
+                            <option value="{{courseworkId}}">{{courseworkName}}</option>  <!-- This is how a coursework will be selected.
+                                                                        The value attribute will be the coursework ID, and the 
+                                                                        text displayed will be the coursework name. -->
+                            {{/courseworks}}
+                        </select>
+                    </div>
+                    <h2 style="font-size:32; color:white; margin-bottom:30px;">Name</h2>
+                    <div id="nameDiv" class="form-group">
+                        
+                    </div>
+                    <h2 style="font-size:32; color:white; margin-bottom:30px;">Description</h2>
+                    <div id="descDiv" class="form-group">
+                        
+                    </div>
+                    <h2 style="font-size:32; color:white; margin-bottom:30px;">Milestones</h2>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="button" onclick="addMilestone()">Add Milestone</button>
+                        <div id="milestoneDiv">
+                        </div>
+                    </div>
+                    <h2 style="font-size:32; color:white; margin-bottom:30px;">Due Date</h2>
+                    <div id="dueDateDiv" class="form-group">
+                        <input type="text" class="form-control" id="dueDate" name="dueDate" disabled/>
+                    </div>
+                    <h2 style="font-size:32; color:white; margin-bottom:30px;">Completion Date</h2>
+                    <div id="compDateDiv" class="form-group">
+                        <input type="text" class="form-control" id="completionDate" name="completionDate"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

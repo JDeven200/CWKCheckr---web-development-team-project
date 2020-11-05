@@ -1,0 +1,61 @@
+<html lang="en">
+    {{>header}}
+    <body>
+        <div class="container">
+            {{>page-header}}
+        </div>
+        <div class="container">
+        <a class="nav-link" style="color:red; font-size:24;" href="/">Back</a>
+            <div class="jumbotron"style="background-color: :#7D7D7D;">
+                {{#Coursework}}
+                <h2 style="background-color:#2E2E2E; color:white;" font-family:'Red Hat Display', sans serif;">{{OriginStudent}}'s {{courseworkName}} coursework</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Coursework Name</th>
+                                <th scope="col">Course Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Milestones</th>
+                                <th scope="col">Due Date</th>
+                                <th scope="col">Completion Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color:red;">{{courseworkName}}</td>
+                                <td style="color:red;">{{courseName}}</td>
+                                <td width="200">{{courseworkDescription}}</td>
+                                <td>
+                                    <ul>
+                                        {{#milestones}}
+                                            <li>
+                                                {{milestoneTitle}}
+                                                {{#complete}}
+                                                    <div>
+                                                        <img src="../check-square.svg" id="checkImg"/>
+                                                    <div>
+                                                {{/complete}}
+                                                {{^complete}}
+                                                    <div>
+                                                        <img src="../square.svg" id="checkImg"/>
+                                                    <div>
+                                                {{/complete}}
+                                            </li>
+                                        {{/milestones}}
+                                    </ul>
+                                </td>
+                                <td>{{dueDate}}</td>
+                                <td>{{completionDate}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {{/Coursework}}
+                {{^Coursework}}
+                    <div class="jumbotron" style="background-color:#C4C4C4;">
+                        <h3 style="font-family:'Red Hat Display', sans serif;">No Items to show.</h3>
+                    </div>
+                {{/Coursework}}
+            </div>
+        </div>
+    </body>
+</html>

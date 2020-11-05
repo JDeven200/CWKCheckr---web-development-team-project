@@ -1,0 +1,26 @@
+<html lang="en">
+    {{>header}}
+        <body class="container">
+            {{>page-header-nologin}}
+            <div style="display:inline-block; font-size:52; margin-top:250px; font-family:'Red Hat Display', sans serif;">Welcome</div>
+            <div style="display:inline-block; font-size:72; color:red; margin-top:250px; font-family:'Red Hat Display', sans serif;"> back.</div>
+            <div class="jumbotron" style="display:inline-block; float:right; 
+            vertical-align:middle; margin-right:100px; margin-top:150px;
+            width:350px; background-color: #707070;">
+                <h2 style="font-size:32; color:white; margin-bottom:30px;">Login</h2>
+                <h3 style="font-size:24; color:red;">{{error}}</h3>
+                <form action= "/api/login" method = "post">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" aria-describedby="userHelp">
+                        <small id="userHelp" class="form-text" style="color:white;">Enter the username you used to register.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </body>
+</html>
